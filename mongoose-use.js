@@ -47,7 +47,7 @@ Users.find({ adsoyad: "enes", yas: 20 }).then((result) => {
 });
 
 // Belirtilen id değerine ait kaydı getirir.
-Users.findById("610448f883c7150d54433d8c").then((result) => {
+Users.findById("611ea773788a013b2029aba4").then((result) => {
     console.log(result);
 });
 
@@ -89,7 +89,7 @@ Users.find().limit(2).then((result) => {
 //----------------------------------------------------------------------------------------------------------------
 
 // Belirtilen id'deki kaydı değiştirir. (mevcut/değişecek)
-Users.findByIdAndUpdate("610448f883c7150d54433d8c", { adsoyad: "enes" }).then(
+Users.findByIdAndUpdate("611ea773788a013b2029aba4", { adsoyad: "enes" }).then(
     (result) => { }
 );
 
@@ -101,7 +101,7 @@ Users.findOneAndUpdate({ adsoyad: "enes" }, { adsoyad: "james" }).then(
 //----------------------------------------------------------------------------------------------------------------
 
 // Belirtilen id değerine ait kaydı siler.
-Users.findByIdAndDelete("610448c0eb7f55133cbe82d6").then((result) => { });
+Users.findByIdAndDelete("611ea773788a013b2029aba4").then((result) => { });
 
 // Belirtilen değere ait kaydı siler.
 Users.findOneAndDelete({ adsoyad: "enes" }).then((result) => { });
