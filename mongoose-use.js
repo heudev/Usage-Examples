@@ -46,7 +46,7 @@ Users.find({ adsoyad: "enes", yas: 20 }).then((result) => {
     console.log(result);
 });
 
-// Belirtilern id değerine ait kaydı getirir.
+// Belirtilen id değerine ait kaydı getirir.
 Users.findById("610448f883c7150d54433d8c").then((result) => {
     console.log(result);
 });
@@ -71,7 +71,7 @@ Users.find().sort({ adsoyad: 1 }).then((result) => {
     console.log(result);
 });
 
-// Tüm kayıtları adsoyad'a göre alfabenin tesine göre listeler.
+// Tüm kayıtları adsoyad'a göre alfabenin tersine göre listeler.
 Users.find().sort({ adsoyad: -1 }).then((result) => {
     console.log(result);
 });
@@ -106,7 +106,7 @@ Users.findByIdAndDelete("610448c0eb7f55133cbe82d6").then((result) => { });
 // Belirtilen değere ait kaydı siler.
 Users.findOneAndDelete({ adsoyad: "enes" }).then((result) => { });
 
-// Cluster'daki tüm kayıltarı siler.
+// Cluster'daki tüm kayıtları siler.
 Users.deleteMany().then((result) => { });
 
 //----------------------------------------------------------------------------------------------------------------
