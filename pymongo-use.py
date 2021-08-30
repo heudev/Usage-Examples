@@ -1,5 +1,6 @@
 from pymongo import MongoClient
 #pip install pymongo[srv]
+#pip install dnspython==2.0.0
 
 myclient = MongoClient("mongodb+srv://")
 mydb = myclient["qwe"] #db
