@@ -1,0 +1,9 @@
+{% extends "theme.html" %}
+
+{% block body %}
+<form action="/file" method="post" enctype="multipart/form-data">
+    <input type="file" name="file">
+    <button type="submit">Submit</button>
+</form>
+{{get_flashed_messages()[0]}}
+{% endblock body %}

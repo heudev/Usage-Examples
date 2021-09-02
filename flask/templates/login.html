@@ -1,0 +1,20 @@
+{% extends "theme.html" %}
+
+{% block body %}
+<form action="/login" method="post">
+    <input type="text" name="username" placeholder="Username">
+    <input type="password" name="password" placeholder="Password">
+    <button type="submit">Submit</button>
+</form>
+
+{% comment %}
+{% with message=get_flashed_messages() %}
+{% if message%}
+<span style="color: brown;">{{message[0]}}</span>
+{% endif %}
+{% endwith %}
+{% endcomment %}
+
+{{get_flashed_messages()[0]}}
+
+{% endblock body %}
