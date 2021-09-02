@@ -56,6 +56,10 @@ for x in mydoc:
 mydoc = mycol.find().sort("name", -1)
 for x in mydoc:
   print(x)
+  
+# Veritabanından belirtilen miktarda random kayıt getirir.
+mydoc = list(mycol.aggregate([{"$sample": {"size": 1}}]))
+print(mydoc)
 
 #---------------------------------------------------------------------
 
