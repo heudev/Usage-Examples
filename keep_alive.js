@@ -14,3 +14,12 @@ module.exports = keep_alive;
 
 // const keep_alive = require('./keep_alive');
 // keep_alive();
+
+/*
+function time() {
+    const nDate = new Date().toLocaleString('tr-TR', {
+        timeZone: 'Europe/Istanbul'
+    });
+    return nDate
+}
+*/
