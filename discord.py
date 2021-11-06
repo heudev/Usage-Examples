@@ -1,9 +1,14 @@
 import discord
 from discord.ext import commands, tasks
 import os
+#from keep_alive import keep_alive
 
 token = ""
-bot = commands.Bot(command_prefix='>', description='Developer: @D1STANG3R')
+
+intents = discord.Intents.default()
+intents.members = True
+
+bot = commands.Bot(command_prefix='>', intents=intents, description='Developer: @D1STANG3R')
 
 @bot.event
 async def on_ready():
@@ -11,6 +16,45 @@ async def on_ready():
     automessage.start()
     print('Connected to bot: {}'.format(bot.user.name))
     print('Bot ID: {}'.format(bot.user.id))
+
+# https://discord.com/developers/applications > My Application > Bot > SERVER MEMBERS INTENT (on)
+@bot.event
+async def on_member_join(member):
+    #await member.send('Private message') #Private message
+    guild = member.guild
+    if guild.system_channel is not None:
+        to_send = 'Welcome {0.mention} to {1.name}!'.format(member, guild)
+        await guild.system_channel.send(to_send)
+    
+@bot.event
+async def on_member_remove(member):
+    #await member.send('Private message') #Private message
+    guild = member.guild
+    if guild.system_channel is not None:
+        to_send = 'Bye Bye {0.mention} :('.format(member)
+        await guild.system_channel.send(to_send)
+
+@bot.event 
+async def on_message(message):
+    # we do not want the bot to reply to itself
+    if message.author.bot: return
+
+    getmessage = str(message.content).lower()
+    
+    if getmessage == "hello":
+        await message.reply('Hello!', mention_author=True)
+    if getmessage == "hi":
+        await message.reply('Hi!', mention_author=True)
+
+@bot.event
+async def on_message_delete(message):
+    fmt = '**{0.author}** has deleted the message: {0.content}'
+    await message.channel.send(fmt.format(message))
+
+@bot.event
+async def on_message_edit(before, after):
+    fmt = '**{0.author}** edited their message:\n{0.content} -> {1.content}'
+    await before.channel.send(fmt.format(before, after))
 
 @bot.command()
 async def ping(ctx):
