@@ -68,6 +68,15 @@ async def sum(ctx, args1, args2):
 async def sendfile(ctx):
     for filename in os.listdir("folder_name"):
         await ctx.send(file=discord.File("folder_name/{}".format(filename)))
+  
+@bot.command()
+async def members(ctx):
+    with open("members.txt","a",encoding="UTF-8") as f:
+        f.write("--"+str(len(ctx.guild.members))+" people in total--\n")
+        for count,user in enumerate(ctx.guild.members):
+            f.write(str(count+1)+"-"+str(user)+"\n")
+    await ctx.send(file=discord.File("members.txt"))
+    os.remove("members.txt")
 
 @tasks.loop(minutes=1)  # minutes=x or hours=x
 async def automessage():
