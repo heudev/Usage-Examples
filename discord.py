@@ -68,6 +68,11 @@ async def sum(ctx, args1, args2):
 async def sendfile(ctx):
     for filename in os.listdir("folder_name"):
         await ctx.send(file=discord.File("folder_name/{}".format(filename)))
+        
+@bot.command()
+async def getfile(ctx):
+    for attachment in ctx.attachments:
+        await attachment.save(attachment.filename) 
   
 @bot.command()
 async def members(ctx):
