@@ -39,7 +39,7 @@ async def on_message(message):
     # we do not want the bot to reply to itself
     if message.author.bot: return
 
-    getmessage = str(message.content).lower()
+    getmessage = str(message.content).lower().strip()
     
     if getmessage == "hello":
         await message.reply('Hello!', mention_author=True)
@@ -91,11 +91,3 @@ async def automessage():
 # keep_alive()
 print("Bot is running")
 bot.run(token)
-
-""" 
-import datetime
-import pytz
-fulltime = datetime.datetime.now(pytz.timezone('Europe/Istanbul'))
-fulltime = fulltime.strftime("%d.%m.%Y %H:%M:%S")
-print(fulltime)
-"""
