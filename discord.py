@@ -12,7 +12,7 @@ bot = commands.Bot(command_prefix='>', intents=intents, description='Developer: 
 
 @bot.event
 async def on_ready():
-    await bot.change_presence(activity=discord.Game('>help'))
+    await bot.change_presence(activity=discord.Game('>help'), status=discord.Status.idle) #Status.idle/.dnd/.online
     automessage.start()
     print('Connected to bot: {}'.format(bot.user.name))
     print('Bot ID: {}'.format(bot.user.id))
