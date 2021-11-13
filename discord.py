@@ -1,6 +1,7 @@
 import discord
 from discord.ext import commands, tasks
 import os
+import json
 #from keep_alive import keep_alive
 
 token = ""
@@ -32,20 +33,45 @@ async def on_member_remove(member):
     guild = member.guild
     if guild.system_channel is not None:
         to_send = 'Bye Bye {0.mention} :('.format(member)
-        await guild.system_channel.send(to_send)
-
-@bot.event 
+        await guild.system_channel.send(to_send)        
+       
+@bot.event
 async def on_message(message):
-    # we do not want the bot to reply to itself
-    if message.author.bot: return
+    await bot.process_commands(message)
 
+@bot.listen('on_message')
+async def on_message_listen(message):
+    if message.author.bot: return
     getmessage = str(message.content).lower().strip()
     
     if getmessage == "hello":
         await message.reply('Hello!', mention_author=True)
     if getmessage == "hi":
         await message.reply('Hi!', mention_author=True)
-
+        
+    # Direct message
+    if str(message.channel.id) == str(908618658488659968):
+        channel = bot.get_channel(908373877145608223)
+        if message.attachments:
+            if os.path.exists("attachments") != True:
+                os.mkdir("attachments")
+            for attachment in message.attachments:
+                await attachment.save("./attachments/"+attachment.filename) 
+            for filename in os.listdir("attachments"):
+                await channel.send(file=discord.File("attachments/{}".format(filename)))
+                os.remove("attachments/{}".format(filename))
+        else:
+            await channel.send(message.content)
+            
+    # Answers corresponding to keywords
+    with open('talk.json',encoding="UTF-8") as f:
+        data = json.load(f)
+        for i,value in enumerate(data):
+            keywords = data["{}".format(i)]["keywords"]
+            if getmessage in keywords:
+                response = choiseword(data["{}".format(i)]["answers"])
+                await message.reply(response, mention_author=True)
+    
 @bot.event
 async def on_message_delete(message):
     fmt = '**{0.author}** has deleted the message: {0.content}'
