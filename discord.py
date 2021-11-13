@@ -2,6 +2,7 @@ import discord
 from discord.ext import commands, tasks
 import os
 import json
+import random
 #from keep_alive import keep_alive
 
 token = ""
@@ -69,7 +70,7 @@ async def on_message_listen(message):
         for i,value in enumerate(data):
             keywords = data["{}".format(i)]["keywords"]
             if getmessage in keywords:
-                response = choiseword(data["{}".format(i)]["answers"])
+                response = random.choice(data["{}".format(i)]["answers"])
                 await message.reply(response, mention_author=True)
     
 @bot.event
