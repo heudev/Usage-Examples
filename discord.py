@@ -1,5 +1,6 @@
 import discord
 from discord.ext import commands, tasks
+from discord.ext.commands.errors import CommandInvokeError, MemberNotFound, MissingPermissions
 import os
 import json
 import random
