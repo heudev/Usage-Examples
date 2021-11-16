@@ -115,6 +115,51 @@ async def automessage():
     channel = bot.get_channel(807080697852719502)
     await channel.send("Hi")
 
+@bot.command(name="ban", help="command to ban user")
+@commands.has_permissions(ban_members=True)
+async def ban(ctx, member: discord.Member, *, reason=None):
+    if member == ctx.message.author:
+        await ctx.reply("You cannot ban yourself")
+        return
+    banembed = discord.Embed(title=f":boot: Banned {member.name}!", description=f"Reason: {reason}\nBy: {ctx.author.mention}\nFrom: **{ctx.guild}**")
+    await member.send(embed=banembed)
+    await member.ban(reason=reason)
+    await ctx.message.delete()
+    await ctx.channel.send(embed=banembed)
+    
+@bot.command()
+@commands.has_permissions(administrator=True)
+async def unban(ctx, *, member_id: int):
+    await ctx.guild.unban(discord.Object(id=member_id))
+    await ctx.send(f"Unban {member_id}")
+
+@bot.command()
+@commands.has_permissions(kick_members=True)
+async def kick(ctx, user: discord.Member, *, reason=None):
+    if user == ctx.message.author:
+        await ctx.reply("You cannot ban yourself")
+        return
+    kickembed = discord.Embed(title=f":boot: Kicked {user.name}!", description=f"Reason: {reason}\nBy: {ctx.author.mention}\nFrom: **{ctx.guild}**")
+    await user.send(embed=kickembed)
+    await user.kick(reason=reason)
+    await ctx.message.delete()
+    await ctx.channel.send(embed=kickembed)
+    
+@bot.command()
+async def kickyourself(ctx):
+    await ctx.author.send("https://discord.gg/")
+    await ctx.author.kick()
+    await ctx.channel.send("{0.mention} kicked itself".format(ctx.author))
+    
+@bot.event
+async def on_command_error(ctx, error):
+    if isinstance(error, MissingPermissions):
+        await ctx.reply("You don't have permission to ban")
+    if isinstance(error, MemberNotFound):
+        await ctx.reply("There is no such person on this server.")
+    if isinstance(error, CommandInvokeError):
+        await ctx.reply("I do not have authority")
+        
 # keep_alive()
 print("Bot is running")
 bot.run(token)
