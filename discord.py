@@ -152,10 +152,24 @@ async def kickyourself(ctx):
     await ctx.author.kick()
     await ctx.channel.send("{0.mention} kicked itself".format(ctx.author))
     
+@bot.command(description="Mutes the specified user.")
+@commands.has_permissions(manage_messages=True)
+async def mute(ctx, member: discord.Member, *, reason=None):
+    guild = ctx.guild
+    mutedRole = discord.utils.get(guild.roles, name="Muted")
+    if not mutedRole:
+        mutedRole = await guild.create_role(name="Muted")
+        for channel in guild.channels:
+            await channel.set_permissions(mutedRole, speak=False, send_messages=False, read_message_history=True, read_messages=False)
+    embed = discord.Embed(title=":mute: Muted", description=f"{member.mention} was muted ", colour=discord.Colour.light_gray())
+    embed.add_field(name="reason:", value=reason, inline=False)
+    await ctx.send(embed=embed)
+    await member.add_roles(mutedRole, reason=reason)
+    
 @bot.event
 async def on_command_error(ctx, error):
     if isinstance(error, MissingPermissions):
-        await ctx.reply("You don't have permission to ban")
+        await ctx.reply("You don't have permission to this")
     if isinstance(error, MemberNotFound):
         await ctx.reply("There is no such person on this server.")
     if isinstance(error, CommandInvokeError):
