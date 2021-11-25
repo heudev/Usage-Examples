@@ -4,6 +4,7 @@ from discord.ext.commands.errors import CommandInvokeError, MemberNotFound, Miss
 import os
 import json
 import random
+import asyncio
 #from keep_alive import keep_alive
 
 token = ""
@@ -72,6 +73,8 @@ async def on_message_listen(message):
             keywords = data["{}".format(i)]["keywords"]
             if getmessage in keywords:
                 response = random.choice(data["{}".format(i)]["answers"])
+                async with message.channel.typing():
+                    await asyncio.sleep(2)
                 await message.reply(response, mention_author=True)
     
 @bot.event
