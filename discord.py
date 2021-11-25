@@ -123,7 +123,8 @@ async def ban(ctx, member: discord.Member, *, reason=None):
         await ctx.reply("You cannot ban yourself")
         return
     banembed = discord.Embed(title=f":boot: Banned {member.name}!", description=f"Reason: {reason}\nBy: {ctx.author.mention}\nFrom: **{ctx.guild}**")
-    await member.send(embed=banembed)
+    try: await member.send(embed=banembed)
+    except: pass
     await member.ban(reason=reason)
     await ctx.message.delete()
     await ctx.channel.send(embed=banembed)
@@ -141,7 +142,8 @@ async def kick(ctx, user: discord.Member, *, reason=None):
         await ctx.reply("You cannot ban yourself")
         return
     kickembed = discord.Embed(title=f":boot: Kicked {user.name}!", description=f"Reason: {reason}\nBy: {ctx.author.mention}\nFrom: **{ctx.guild}**")
-    await user.send(embed=kickembed)
+    try: await user.send(embed=kickembed)
+    except: pass
     await user.kick(reason=reason)
     await ctx.message.delete()
     await ctx.channel.send(embed=kickembed)
