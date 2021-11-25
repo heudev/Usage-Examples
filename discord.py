@@ -155,7 +155,7 @@ async def kickyourself(ctx):
     await ctx.channel.send("{0.mention} kicked itself".format(ctx.author))
     
 @bot.command(description="Mutes the specified user.")
-@commands.has_permissions(manage_messages=True)
+@commands.has_permissions(manage_roles=True)
 async def mute(ctx, member: discord.Member, *, reason=None):
     guild = ctx.guild
     mutedRole = discord.utils.get(guild.roles, name="Muted")
@@ -165,8 +165,17 @@ async def mute(ctx, member: discord.Member, *, reason=None):
             await channel.set_permissions(mutedRole, speak=False, send_messages=False, read_message_history=True, read_messages=False)
     embed = discord.Embed(title=":mute: Muted", description=f"{member.mention} was muted ", colour=discord.Colour.light_gray())
     embed.add_field(name="reason:", value=reason, inline=False)
-    await ctx.send(embed=embed)
+    await ctx.reply(embed=embed)
     await member.add_roles(mutedRole, reason=reason)
+ 
+@bot.command(description="Unmute the specified user.")
+@commands.has_permissions(manage_roles=True)
+async def unmute(ctx, member: discord.Member):
+    guild = ctx.guild
+    mutedRole = discord.utils.get(guild.roles, name="Muted")
+    embed = discord.Embed(title=":speaker: Unmuted", description=f"{member.mention} was unmuted ", colour=discord.Colour.light_gray())
+    await ctx.reply(embed=embed)
+    await member.remove_roles(mutedRole)
     
 @bot.event
 async def on_command_error(ctx, error):
