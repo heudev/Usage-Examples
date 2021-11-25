@@ -176,7 +176,12 @@ async def unmute(ctx, member: discord.Member):
     embed = discord.Embed(title=":speaker: Unmuted", description=f"{member.mention} was unmuted ", colour=discord.Colour.light_gray())
     await ctx.reply(embed=embed)
     await member.remove_roles(mutedRole)
-    
+  
+@bot.command(name='clear', help='This command will clear messages')
+@commands.has_permissions(manage_messages=True)
+async def clear(ctx, amount = 1):
+    await ctx.channel.purge(limit=amount+1)
+  
 @bot.event
 async def on_command_error(ctx, error):
     if isinstance(error, MissingPermissions):
