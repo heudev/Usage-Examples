@@ -5,6 +5,13 @@ def GetTime(format=None):
     fulltime = fulltime.strftime(format)
     return fulltime
 
+def CalculateTime(Date1, Date2):
+    format = "%d.%m.%Y %H:%M:%S"
+    d1 = datetime.strptime(Date1, format)
+    d2 = datetime.strptime(Date2, format)
+    daysDiff = (d2-d1)
+    return int(daysDiff.total_seconds())
+
 def Choice(array:list):
     import random
     return str(random.choice(array))
