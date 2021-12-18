@@ -195,6 +195,16 @@ async def on_command_error(ctx, error):
         await ctx.reply("I do not have authority")
         
 @bot.command()
+async def avatar(ctx, member: discord.Member = None):
+    if member is None:
+        member = ctx.author
+    filename = f"{member.display_name}.png"
+    await member.avatar_url.save(filename)
+    file = discord.File(fp=filename)
+    await ctx.send(file=file)
+    os.remove(filename)
+        
+@bot.command()
 async def embed(ctx):
     embed = discord.Embed()
     embed.color = discord.Color.dark_red()
