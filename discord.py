@@ -194,6 +194,45 @@ async def on_command_error(ctx, error):
     if isinstance(error, CommandInvokeError):
         await ctx.reply("I do not have authority")
         
+@bot.command()
+async def embed(ctx):
+    embed = discord.Embed()
+    embed.color = discord.Color.dark_red()
+    embed.title = "This is a title"
+    embed.url = "https://github.com/hulkienesuysal"
+    embed.description = f"This is a description\nAuthor: {ctx.author.mention}"
+    embed.set_thumbnail(url="https://picsum.photos/200")
+    embed.set_author(
+        icon_url=ctx.author.avatar_url,
+        name=ctx.author.display_name,
+        url="https://github.com/hulkienesuysal"
+    )
+    embed.add_field(
+        name="Field 1 Title",
+        value="https://github.com/hulkienesuysal",
+        inline=False
+    )
+    embed.add_field(
+        name="Field 2 Title",
+        value="*It is inline with Field 2*",
+        inline=True
+    )
+    embed.add_field(
+        name="Field 3 Title",
+        value="***It is inline with Field 3***",
+        inline=True
+    )
+    embed.add_field(
+        name="Field 4 Title",
+        value=f"```css\n {ctx.author} $48```",
+        inline=False
+    )
+    embed.set_footer(
+        icon_url=ctx.guild.icon_url,
+        text=ctx.message.guild.name
+    )
+    await ctx.send(embed=embed)
+        
 # keep_alive()
 print("Bot is running")
 bot.run(token)
