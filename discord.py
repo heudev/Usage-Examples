@@ -7,8 +7,6 @@ import random
 import asyncio
 #from keep_alive import keep_alive
 
-token = ""
-
 intents = discord.Intents.default()
 intents.members = True
 
@@ -114,7 +112,7 @@ async def members(ctx):
     await ctx.send(file=discord.File("members.txt"))
     os.remove("members.txt")
 
-@tasks.loop(minutes=1)  # minutes=x or hours=x
+@tasks.loop(minutes=1)  # seconds=x minutes=x or hours=x or 
 async def automessage():
     channel = bot.get_channel(807080697852719502)
     await channel.send("Hi")
@@ -245,4 +243,5 @@ async def embed(ctx):
         
 # keep_alive()
 print("Bot is running")
+token = ""
 bot.run(token)
