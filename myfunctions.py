@@ -24,3 +24,13 @@ def RandomNumber(args1:int,args2:int):
 def TurkishWord(word:str):
     from unicode_tr import unicode_tr
     return unicode_tr(u"{}".format(word))
+
+def speak(text):
+    import gtts
+    from playsound import playsound #("pip install playsound==1.2.2")
+    import os
+    tts = gtts.gTTS(text, lang="tr", slow=False)
+    filename = "voice.mp3"
+    tts.save(filename)
+    playsound(filename)
+    os.remove(filename)
