@@ -84,6 +84,14 @@ async def on_message_delete(message):
 async def on_message_edit(before, after):
     fmt = '**{0.author}** edited their message:\n{0.content} -> {1.content}'
     await before.channel.send(fmt.format(before, after))
+ 
+@bot.event
+async def on_voice_state_update(member, before, after):
+    if not member.bot:  # except bots
+        if before.channel is None and after.channel is not None:
+            print("Join", member)
+        if before.channel is not None and after.channel is None:
+            print("Left", member)
 
 @bot.command()
 async def ping(ctx):
