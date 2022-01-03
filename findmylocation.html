@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="shortcut icon" type="image/png" href="" />
+    <title>D1STANG3R</title>
+</head>
+<body class="bg-dark text-white">
+    <iframe id="map" src="https://www.google.com/maps?output=embed&q=Türkiye" width="100%" height="100%" frameborder="0"
+        style="border:0;margin-bottom:10px" allowfullscreen="" aria-hidden="false" tabindex="0">
+    </iframe>
+
+    <button class="btn btn-sm btn-primary" onclick="getLocation()">Find</button>
+    <p id="data"></p>
+
+    <!-- 
+        https://www.google.com/maps?output=embed&q=Türkiye
+        https://www.google.com/maps?output=embed&q=40.989491199999996,29.104537600000004
+        https://www.google.com/maps?output=embed&z=15&q=40.989491199999996,29.104537600000004
+     -->
+    <script>
+        document.getElementById('map').setAttribute('width', window.innerWidth);
+        document.getElementById('map').setAttribute('height', window.innerHeight - 200);
+
+        var x = document.getElementById("data");
+        function getLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(showPosition);
+            } else {
+                x.innerHTML = "Geolocation is not supported by this browser.";
+            }
+        }
+
+        function showPosition(position) {
+            x.innerHTML = "Latitude: " + position.coords.latitude + "<br>Longitude: " + position.coords.longitude;
+            mapembed = `https://www.google.com/maps?output=embed&z=15&q=${position.coords.latitude},${position.coords.longitude}`;
+            document.getElementById('map').setAttribute('src', mapembed);
+        }
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
