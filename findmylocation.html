@@ -35,7 +35,7 @@
         }
 
         function showPosition(position) {
-            x.innerHTML = "Latitude: " + position.coords.latitude + "<br>Longitude: " + position.coords.longitude;
+            x.innerHTML = "Latitude: " + position.coords.latitude + "<br>Longitude: " + position.coords.longitude + "<br>Accuracy: " + position.coords.accuracy + " metre";
             mapembed = `https://www.google.com/maps?output=embed&z=15&q=${position.coords.latitude},${position.coords.longitude}`;
             document.getElementById('map').setAttribute('src', mapembed);
         }
