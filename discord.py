@@ -9,13 +9,15 @@ import asyncio
 
 intents = discord.Intents.default()
 intents.members = True
+intents.presences = True
 
 bot = commands.Bot(command_prefix='>', intents=intents, description='Developer: @D1STANG3R')
 
 @bot.event
 async def on_ready():
     await bot.change_presence(activity=discord.Game('>help'), status=discord.Status.idle) #Status.idle/.dnd/.online
-    automessage.start()
+    #automessage.start()
+    presence.start()
     print('Connected to bot: {}'.format(bot.user.name))
     print('Bot ID: {}'.format(bot.user.id))
 
@@ -124,6 +126,44 @@ async def members(ctx):
 async def automessage():
     channel = bot.get_channel(807080697852719502)
     await channel.send("Hi")
+   
+currentstatus = ""
+@tasks.loop(seconds=1)
+async def presence():
+    server = bot.get_guild(275962706002051072)
+    online = 0
+    offline = 0
+    dnd = 0
+    idle = 0
+    numberofmembers = 0
+    numberofbot = 0
+    numberoftextchannel = 0
+    numberofvoicechannel = 0
+    numberofvoiceconnect = 0
+    for member in server.members:
+        if member.bot:
+            numberofbot += 1
+        else:
+            numberofmembers += 1
+            if str(member.status) == "online":
+                online += 1
+            if str(member.status) == "offline":
+                offline += 1
+            if str(member.status) == "dnd":
+                dnd += 1
+            if str(member.status) == "idle":
+                idle += 1
+    for channel in server.text_channels:
+        numberoftextchannel += 1
+    for channel in server.voice_channels:
+        numberofvoicechannel += 1
+        if channel.members != []:
+            numberofvoiceconnect += len(channel.members)
+    message = f"🟢  {online}    ⛔  {dnd}   🌙  {idle}   ◯  {offline}   👤  {numberofmembers}   🤖  {numberofbot}   💬  {numberoftextchannel}   🔊  {numberofvoicechannel}   🗣  {numberofvoiceconnect}"
+    global currentstatus
+    if currentstatus != message:
+        await bot.change_presence(activity=discord.Game(message), status=discord.Status.dnd)
+        currentstatus = message
 
 @bot.command(name="ban", help="command to ban user")
 @commands.has_permissions(ban_members=True)
