@@ -159,7 +159,7 @@ async def presence():
         numberofvoicechannel += 1
         if channel.members != []:
             numberofvoiceconnect += len(channel.members)
-    message = f"🟢  {online}    ⛔  {dnd}   🌙  {idle}   ◯  {offline}   👤  {numberofmembers}   🤖  {numberofbot}   💬  {numberoftextchannel}   🔊  {numberofvoicechannel}   🗣  {numberofvoiceconnect}"
+    message = f"🟢 {online} ⛔ {dnd} 🌙 {idle} ◯ {offline} 👤 {numberofmembers} 🤖 {numberofbot} 🗣 {numberofvoiceconnect} 💬 {numberoftextchannel} 🔊 {numberofvoicechannel}"
     global currentstatus
     if currentstatus != message:
         await bot.change_presence(activity=discord.Game(message), status=discord.Status.dnd)
