@@ -94,6 +94,8 @@ async def on_voice_state_update(member, before, after):
             print("Join", member)
         if before.channel is not None and after.channel is None:
             print("Left", member)
+        if before.channel is not None and after.channel is not None:
+            print("Changed channel", member)
 
 @bot.command()
 async def ping(ctx):
