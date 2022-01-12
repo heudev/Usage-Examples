@@ -52,6 +52,13 @@ async def on_message_listen(message):
     if getmessage == "hi":
         await message.reply('Hi!', mention_author=True)
         
+    try:
+        math = getmessage.replace(",", ".")
+        result = eval(math)
+        if math != str(result):        
+            await message.channel.send(result)
+    except:pass
+        
     # Direct message
     if str(message.channel.id) == str(908618658488659968):
         channel = bot.get_channel(908373877145608223)
