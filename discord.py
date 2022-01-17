@@ -258,7 +258,16 @@ async def avatar(ctx, member: discord.Member = None):
     file = discord.File(fp=filename)
     await ctx.send(file=file)
     os.remove(filename)
-        
+     
+@bot.command()
+async def invite(ctx, max_age: int = 0, max_uses: int = 0):
+    link = await ctx.channel.create_invite(xkcd=True, max_age=max_age, max_uses=max_uses)
+    if max_age == 0:
+        max_age = "Unlimited"
+    if max_uses == 0:
+        max_uses = "Unlimited"
+    await ctx.channel.send(f"> *Max age:* **{max_age}**\n> *Max uses:* **{max_uses}**\n> {link}")
+     
 @bot.command()
 async def embed(ctx):
     embed = discord.Embed()
