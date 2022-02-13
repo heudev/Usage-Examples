@@ -306,6 +306,16 @@ async def embed(ctx):
         text=ctx.message.guild.name
     )
     await ctx.send(embed=embed)
+    
+async def create_text_channel(guildid: int, category_name: str, channel_name: str):
+    guild = bot.get_guild(int(guildid))
+    category = discord.utils.get(guild.categories, name=category_name)
+    if category is None:
+        await guild.create_category(category_name)
+        category = discord.utils.get(guild.categories, name=category_name)
+    channel = discord.utils.get(guild.text_channels, name=channel_name)
+    if channel is None:
+        await guild.create_text_channel(channel_name, category=category)
         
 # keep_alive()
 print("Bot is running")
