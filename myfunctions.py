@@ -6,11 +6,18 @@ def GetTime(format=None):
     return fulltime
 
 def CalculateTime(Date1, Date2):
+    import datetime
     format = "%d.%m.%Y %H:%M:%S"
-    d1 = datetime.strptime(Date1, format)
-    d2 = datetime.strptime(Date2, format)
+    d1 = datetime.datetime.strptime(Date1, format)
+    d2 = datetime.datetime.strptime(Date2, format)
     daysDiff = (d2-d1)
     return int(daysDiff.total_seconds())
+
+def find_between_two_dates(date1, date2):  # find_between_two_dates("20.02.2022", "27.04.2000")
+    dt1 = datetime.datetime.strptime(date1, "%d.%m.%Y")
+    dt2 = datetime.datetime.strptime(date2, "%d.%m.%Y")
+    result = (dt1 - dt2).days
+    return result
 
 def Choice(array:list):
     import random
@@ -18,7 +25,7 @@ def Choice(array:list):
 
 def RandomNumber(args1:int,args2:int):
     import random
-    randomnumber = random.randint(int(args1),int(args2))
+    randomnumber = random.randint(int(args1), int(args2))
     return randomnumber
 
 def TurkishWord(word:str):
