@@ -2,7 +2,7 @@ import requests
 from bs4 import BeautifulSoup
 
 site = requests.get("")
-soup = BeautifulSoup(site.text, features="html.parser")
+soup = BeautifulSoup(site.content.decode("utf-8"), features="html.parser")
 #soup = soup.prettify() (regular)
 
 path = soup.select('table > tbody > tr > td:nth-child(2)')
