@@ -14,6 +14,7 @@ def CalculateTime(Date1, Date2):
     return int(daysDiff.total_seconds())
 
 def find_between_two_dates(date1, date2):  # find_between_two_dates("20.02.2022", "27.04.2000")
+    import datetime
     dt1 = datetime.datetime.strptime(date1, "%d.%m.%Y")
     dt2 = datetime.datetime.strptime(date2, "%d.%m.%Y")
     result = (dt1 - dt2).days
