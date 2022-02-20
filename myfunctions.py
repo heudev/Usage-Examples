@@ -34,3 +34,8 @@ def speak(text):
     tts.save(filename)
     playsound(filename)
     os.remove(filename)
+ 
+def python_installed_packages():
+    import pkg_resources
+    installed_packages = {d.project_name: d.version for d in pkg_resources.working_set}
+    print(installed_packages)
