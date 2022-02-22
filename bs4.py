@@ -1,7 +1,10 @@
 import requests
 from bs4 import BeautifulSoup
-
-site = requests.get("")
+"""
+import urllib3
+urllib3.disable_warnings()
+"""
+site = requests.get("") # verify=False
 soup = BeautifulSoup(site.content.decode("utf-8"), features="html.parser")
 #soup = soup.prettify() (regular)
 
