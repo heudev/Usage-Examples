@@ -1,5 +1,5 @@
 import discord
-from discord.ext import commands
+from discord.ext import commands,tasks
 from flask import Flask
 from threading import Thread
 import datetime, pytz
@@ -64,6 +64,17 @@ async def sendmessage(ctx, member: discord.Member, *, message):
     except:
         pass
 
+async def getchannel(guild, category_name, channel_name):
+    category = discord.utils.get(guild.categories, name=category_name)
+    if category == None:
+        await guild.create_category(category_name)
+        category = discord.utils.get(guild.categories, name=category_name)
+    channel = discord.utils.get(guild.text_channels, name=channel_name)
+    if channel == None:
+        await guild.create_text_channel(channel_name, category=category)
+        channel = discord.utils.get(guild.text_channels, name=channel_name)
+    return channel
+    # channel = await getchannel(guild, "category_name", "channel_name")
 
 keep_alive()
 bot.run("token")
